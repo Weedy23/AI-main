@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="//unpkg.com/brain.js"></script>
+</head>
+<body>
+  <div id="div"> </div>
+  <form onsubmit="return nameTransition()">
+    Name: <input type="text" id="nam" size="20" name="name"><br>
+    <input type="submit" value="Submit">
+  </form>
+    <script>
+    const AI = new brain.recurrent.LSTM();
+    AI.train([
+    {input:"Davids", output:"0"},
+    {input:"Martiņš", output:"0"},
+    {input:"Eriks", output:"0"},
+    {input:"Arsenijs", output:"0"},
+    {input:"Gustavs", output:"0"},
+    {input:"Nikita", output:"1"},
+    {input:"Ilja", output:"1"},
+    {input:"Luka", output:"1"},
+    {input:"Savva", output:"1"},
+    {input:"Kuzma", output:"1"},
+    {input:"Aija", output:"2"},
+    {input:"Nikola", output:"2"},
+    {input:"Katrina", output:"2"},
+    {input:"Eliza", output:"2"},
+    {input:"Anna", output:"2"},
+    {input:"Markus", output:"3"},
+    {input:"Edžus", output:"3"},
+    {input:"Mikus", output:"3"}
+    ], {iterations:  100});
+
+    function nameTransition() {
+      let name = document.getElementById("nam").value;
+      let res = AI.run(name);
+      if (res === "0") {
+        name = name.substring(0, name.length - 1) + "am";
+      } else if (res === "1") {
+        name = name + "m";
+      } else if (res === "2") {
+        name = name + "i";
+      } else if (res === "3") {
+        name = name.substring(0, name.length - 1) + "m";
+      }
+      document.getElementById("div").innerHTML = name;
+    }
+  </script>
+</body>
+</html>
